@@ -75,35 +75,48 @@ reviewsRouter.get("/:movieId/:reviewId", async (req, res, next) => {
   }
 });
 
-reviewsRouter.put(
-  "/:movieId/:reviewId",
-  checkReviewsSchema,
-  triggerBadRequest,
-  async (req, res, next) => {
-    try {
-      const reviewArray = await getReviews();
-      const index = reviewArray.findIndex(
-        (review) => reviewmovie.id === req.params.reviewId
+reviewsRouter.put("/:movieId/:reviewId", async (req, res, next) => {
+  try {
+    const reviewArray = await getReviews();
+    const index = reviewArray.findIndex(
+      (review) => review.id === req.params.reviewId
+    );
+    if (index !== -1) {
+      const oldReview = reviewArray[index];
+      const newReview = {
+        ...oldReview,
+        ...req.body,
+        updatedAt: new Date(),
+      };
+      reviewArray[index] = newReview;
+      await writeReviews(reviewArray);
+      res.send(newReview);
+    } else {
+      next(
+        createHttpError(404, `movie with id ${req.params.movieId} not found!`)
       );
-      if (index !== -1) {
-        const oldReview = reviewArray[index];
-        const newReview = {
-          ...oldReview,
-          ...req.body,
-          updatedAt: new Date(),
-        };
-        reviewArray[index] = newReview;
-        await writeReviews(reviewArray);
-        res.send(newReview);
-      } else {
-        next(
-          createHttpError(404, `movie with id ${req.params.movieId} not found!`)
-        );
-      }
-    } catch (error) {
-      next(error);
     }
+  } catch (error) {
+    next(error);
   }
-);
+});
+reviewsRouter.delete("/:movieId/:reviewId", async (req, res, next) => {
+  try {
+    const reviewArray = await getReviews();
+    const remainingReviews = reviewArray.filter(
+      (review) => review.id !== req.params.reviewId
+    );
+    if (reviewArray.length !== remainingReviews.length) {
+      await writeReviews(remainingReviews);
+      res.status(204).send();
+    } else {
+      next(
+        createHttpError(404, `movie with id ${req.params.movieId} not found!`)
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default reviewsRouter;

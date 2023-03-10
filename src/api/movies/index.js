@@ -8,8 +8,8 @@ const moviesRouter = Express.Router();
 
 moviesRouter.post(
   "/",
-  checkMoviesSchema,
-  triggerBadRequest,
+  // checkMoviesSchema,
+  // triggerBadRequest,
   async (request, response, next) => {
     try {
       const moviesArray = await getMovies();

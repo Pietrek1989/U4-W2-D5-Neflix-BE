@@ -1,10 +1,1 @@
-[
-  {
-    "comment": "Great movie",
-    "rate": 5,
-    "elementId": "1lvc0dq8lf2feqba",
-    "id": "1lvc08solf2hr6yk",
-    "createdAt": "2023-03-10T12:05:35.611Z",
-    "updatedAt": "2023-03-10T12:05:35.611Z"
-  }
-]
+[{"comment":"Great movie","rate":5,"elementId":"1lvc0dq8lf2feqba","id":"1lvc08solf2hr6yk","createdAt":"2023-03-10T12:05:35.611Z","updatedAt":"2023-03-10T12:05:35.611Z"},{"rate":5,"comment":"I'm adding to check ey?","elementId":"1lvc0dq8lf2feqba","id":"1lvc07kglf2l1uup","createdAt":"2023-03-10T13:37:51.985Z","updatedAt":"2023-03-10T13:37:51.985Z"}]

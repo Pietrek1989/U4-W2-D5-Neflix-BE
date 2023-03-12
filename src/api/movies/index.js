@@ -46,6 +46,11 @@ moviesRouter.get("/", async (request, response, next) => {
         (movie) => movie.category === request.query.category
       );
       response.send(filteredMovies);
+    } else if (request.query && request.query.title) {
+      const filteredMovies = moviesArray.filter((movie) =>
+        movie.title.toLowerCase().includes(request.query.title.toLowerCase())
+      );
+      response.send(filteredMovies);
     } else {
       response.send(moviesArray);
     }
